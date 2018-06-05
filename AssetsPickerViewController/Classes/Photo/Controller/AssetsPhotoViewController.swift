@@ -688,6 +688,12 @@ extension AssetsPhotoViewController: UICollectionViewDataSourcePrefetching {
 extension AssetsPhotoViewController: AssetsAlbumViewControllerDelegate {
     
     public func assetsAlbumViewControllerCancelled(controller: AssetsAlbumViewController) {
+        if let picker = controller.presentingViewController as? AssetsPickerViewController {
+            picker.view.isHidden = true
+            DispatchQueue.main.async() {
+                picker.dismiss(animated: false, completion: nil)
+            }
+        }
         logi("Cancelled.")
     }
     

@@ -205,11 +205,15 @@ extension AssetsManager {
     open func imageOfAlbum(at indexPath: IndexPath, size: CGSize, isNeedDegraded: Bool = true, completion: @escaping ((UIImage?) -> Void)) {
         if let fetchResult = fetchMap[sortedAlbumsArray[indexPath.section][indexPath.row].localIdentifier] {
             if let asset = fetchResult.lastObject {
+                let options = PHImageRequestOptions()
+                
+                options.isNetworkAccessAllowed = true
+                
                 imageManager.requestImage(
                     for: asset,
                     targetSize: size,
                     contentMode: .aspectFill,
-                    options: nil,
+                    options: options,
                     resultHandler: { (image, info) in
                         let isDegraded = (info?[PHImageResultIsDegradedKey] as? Bool) ?? false
                         if !isNeedDegraded && isDegraded {
